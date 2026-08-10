@@ -117,7 +117,7 @@ const masterVocabList = [
     { word: "きのう", romaji: "KINOU", meaning: "yesterday" },
     { word: "ぎゅうにゅう", romaji: "GYUUNYUU", meaning: "milk" },
     { word: "きょう", romaji: "KYOU", meaning: "today" },
-    { word: "きょうしつ", romaji: "KYOSHITSU", meaning: "classroom" },
+    { word: "きょうしつ", romaji: "KYOUSHITSU", meaning: "classroom" },
     { word: "くだもの", romaji: "KUDAMONO", meaning: "fruit" },
     { word: "くつ", romaji: "KUTSU", meaning: "shoes" },
     { word: "くるま", romaji: "KURUMA", meaning: "car" },
