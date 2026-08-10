@@ -243,7 +243,7 @@ function handleFormSubmit(event) {
     event.preventDefault();
     
     const inputField = document.getElementById('hiragana-input');
-    const userInput = inputField.value.trim(); 
+    const userInput = inputField.value.trim();
     const correctItem = currentShuffleList[currentIndex];
     const errorDisplay = document.getElementById('error-message');
 
@@ -251,22 +251,18 @@ function handleFormSubmit(event) {
 
     if (userInput === correctItem.word) {
         stopTimer();
-        
-        const pointsEarned = isTimeExpired ? 5 : 10;
-        score += pointsEarned;
-        document.getElementById('score').textContent = `Score: ${score}`;
+        score += 10;
+        document.getElementById('score').textContent = `Ten: ${score}`;
         errorDisplay.textContent = '';
         
         document.getElementById('feedback-title').textContent = "SEIKAI! 🎉";
         document.getElementById('feedback-title').style.color = "var(--primary-green)";
-        document.getElementById('feedback-msg').textContent = `"${correctItem.romaji}" wa "${correctItem.word}" desu (+${pointsEarned} pts)!`;
+        document.getElementById('feedback-msg').textContent = `"${correctItem.romaji}" wa "${correctItem.word}" desu!`;
         document.getElementById('feedback-overlay').style.display = 'flex';
         document.getElementById('next-btn').focus();
     } else {
-        score = Math.max(0, score - 1);
-        document.getElementById('score').textContent = `Score: ${score}`;
-        
-        errorDisplay.textContent = `Chigaimasu! You typed "${userInput}". Try again! (-1 pt)`;
+        const romajiAttempt = hiraganaToRomaji(userInput);
+        errorDisplay.textContent = `Chigaimasu! You typed "${userInput}" (${romajiAttempt}). Try again!`;
         inputField.select();
     }
 }
