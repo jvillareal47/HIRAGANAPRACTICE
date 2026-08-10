@@ -242,31 +242,34 @@ function loadWord() {
 function handleFormSubmit(event) {
     event.preventDefault();
     
-    const inputField = document.getElementById('hiragana-input');
-    const userInput = inputField.value.trim();
+    const inputField = document.getElementById('romaji-input');
+    const userInput = inputField.value.trim().toUpperCase();
     const correctItem = currentShuffleList[currentIndex];
     const errorDisplay = document.getElementById('error-message');
 
     if (!userInput) return;
 
-    if (userInput === correctItem.word) {
+    if (userInput === correctItem.romaji) {
         stopTimer();
-        score += 10;
-        document.getElementById('score').textContent = `Ten: ${score}`;
+        
+        const pointsEarned = isTimeExpired ? 5 : 10;
+        score += pointsEarned;
+        document.getElementById('score').textContent = `Score: ${score}`;
         errorDisplay.textContent = '';
         
-        document.getElementById('feedback-title').textContent = "SEIKAI! 🎉";
+        document.getElementById('feedback-title').textContent = "CORRECT! 🎉";
         document.getElementById('feedback-title').style.color = "var(--primary-green)";
-        document.getElementById('feedback-msg').textContent = `"${correctItem.romaji}" wa "${correctItem.word}" desu!`;
+        document.getElementById('feedback-msg').textContent = `"${correctItem.word}" is spelled "${correctItem.romaji}" (+${pointsEarned} pts)!`;
         document.getElementById('feedback-overlay').style.display = 'flex';
         document.getElementById('next-btn').focus();
     } else {
-        const romajiAttempt = hiraganaToRomaji(userInput);
-        errorDisplay.textContent = `Chigaimasu! You typed "${userInput}" (${romajiAttempt}). Try again!`;
+        score = Math.max(0, score - 1);
+        document.getElementById('score').textContent = `Score: ${score}`;
+        
+        errorDisplay.textContent = `Incorrect! You typed "${userInput}". Try again! (-1 pt)`;
         inputField.select();
     }
 }
-
 function nextWord() {
     currentIndex++;
     if (currentIndex < currentShuffleList.length) {
