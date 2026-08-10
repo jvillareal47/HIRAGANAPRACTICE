@@ -242,15 +242,14 @@ function loadWord() {
 function handleFormSubmit(event) {
     event.preventDefault();
     
-    // Matched with id="hiragana-input" in your index.html
     const inputField = document.getElementById('hiragana-input');
-    const userInput = inputField.value.trim().toUpperCase();
+    const userInput = inputField.value.trim(); 
     const correctItem = currentShuffleList[currentIndex];
     const errorDisplay = document.getElementById('error-message');
 
     if (!userInput) return;
 
-    if (userInput === correctItem.romaji) {
+    if (userInput === correctItem.word) {
         stopTimer();
         
         const pointsEarned = isTimeExpired ? 5 : 10;
@@ -258,16 +257,16 @@ function handleFormSubmit(event) {
         document.getElementById('score').textContent = `Score: ${score}`;
         errorDisplay.textContent = '';
         
-        document.getElementById('feedback-title').textContent = "CORRECT! 🎉";
+        document.getElementById('feedback-title').textContent = "SEIKAI! 🎉";
         document.getElementById('feedback-title').style.color = "var(--primary-green)";
-        document.getElementById('feedback-msg').textContent = `"${correctItem.word}" is spelled "${correctItem.romaji}" (+${pointsEarned} pts)!`;
+        document.getElementById('feedback-msg').textContent = `"${correctItem.romaji}" wa "${correctItem.word}" desu (+${pointsEarned} pts)!`;
         document.getElementById('feedback-overlay').style.display = 'flex';
         document.getElementById('next-btn').focus();
     } else {
         score = Math.max(0, score - 1);
         document.getElementById('score').textContent = `Score: ${score}`;
         
-        errorDisplay.textContent = `Incorrect! You typed "${userInput}". Try again! (-1 pt)`;
+        errorDisplay.textContent = `Chigaimasu! You typed "${userInput}". Try again! (-1 pt)`;
         inputField.select();
     }
 }
