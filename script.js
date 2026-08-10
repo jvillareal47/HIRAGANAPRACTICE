@@ -203,9 +203,12 @@ function startTimer() {
             timerBadge.textContent = `Time: ${timeLeft}s`;
         } else {
             stopTimer();
+            score -= 5;
+            document.getElementById('score').textContent = `Score: ${score}`;
+
             timerBadge.classList.add('expired');
             timerBadge.textContent = `Jikan Kire!`;
-            document.getElementById('error-message').textContent = "⏰ Time's up! You can still enter your answer and check.";
+            document.getElementById('error-message').textContent = "⏰ Time's up! (-5 points). You can still enter your answer and check.";
         }
     }, 1000);
 }
@@ -250,9 +253,11 @@ function handleFormSubmit(event) {
     if (!userInput) return;
 
     if (userInput === correctItem.word) {
+        if (timeLeft > 0) {
+            score += 10;
+        }
         stopTimer();
-        score += 10;
-        document.getElementById('score').textContent = `Ten: ${score}`;
+        document.getElementById('score').textContent = `Score: ${score}`;
         errorDisplay.textContent = '';
         
         document.getElementById('feedback-title').textContent = "SEIKAI! 🎉";
@@ -261,11 +266,15 @@ function handleFormSubmit(event) {
         document.getElementById('feedback-overlay').style.display = 'flex';
         document.getElementById('next-btn').focus();
     } else {
+        score -= 1;
+        document.getElementById('score').textContent = `Score: ${score}`;
+
         const romajiAttempt = hiraganaToRomaji(userInput);
-        errorDisplay.textContent = `Chigaimasu! You typed "${userInput}" (${romajiAttempt}). Try again!`;
+        errorDisplay.textContent = `Chigaimasu! (-1 point) You typed "${userInput}" (${romajiAttempt}). Try again!`;
         inputField.select();
     }
 }
+
 function nextWord() {
     currentIndex++;
     if (currentIndex < currentShuffleList.length) {
@@ -345,7 +354,6 @@ function showCertificate() {
     const today = new Date();
     document.getElementById('cert-date').textContent = today.toISOString().split('T')[0];
 
-    // Apply captured photo as certificate background
     const photoData = document.getElementById('captured-photo').src;
     const certCard = document.getElementById('certificate');
     if (photoData) {
