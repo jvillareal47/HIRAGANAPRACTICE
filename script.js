@@ -242,7 +242,8 @@ function loadWord() {
 function handleFormSubmit(event) {
     event.preventDefault();
     
-    const inputField = document.getElementById('romaji-input');
+    // Matched with id="hiragana-input" in your index.html
+    const inputField = document.getElementById('hiragana-input');
     const userInput = inputField.value.trim().toUpperCase();
     const correctItem = currentShuffleList[currentIndex];
     const errorDisplay = document.getElementById('error-message');
