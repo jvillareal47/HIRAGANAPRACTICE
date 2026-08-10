@@ -195,12 +195,12 @@ function startTimer() {
     timeLeft = TIME_LIMIT;
     const timerBadge = document.getElementById('timer-display');
     timerBadge.classList.remove('expired');
-    timerBadge.textContent = `Jikan: ${timeLeft}s`;
+    timerBadge.textContent = `Time: ${timeLeft}s`;
 
     timerInterval = setInterval(() => {
         timeLeft--;
         if (timeLeft >= 0) {
-            timerBadge.textContent = `Jikan: ${timeLeft}s`;
+            timerBadge.textContent = `Time: ${timeLeft}s`;
         } else {
             stopTimer();
             timerBadge.classList.add('expired');
@@ -230,8 +230,8 @@ function loadWord() {
     document.getElementById('vocab-romaji').textContent = item.romaji;
     document.getElementById('vocab-meaning').textContent = item.meaning;
 
-    document.getElementById('word-count').textContent = `Tango: ${currentIndex + 1} / ${currentShuffleList.length}`;
-    document.getElementById('score').textContent = `Ten: ${score}`;
+    document.getElementById('word-count').textContent = `Item/Word no: ${currentIndex + 1} / ${currentShuffleList.length}`;
+    document.getElementById('score').textContent = `Score: ${score}`;
     
     const progress = (currentIndex / currentShuffleList.length) * 100;
     document.getElementById('progress-bar').style.width = `${progress}%`;
