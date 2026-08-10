@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nihongo N5 Hiragana Renchuu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- 1. WELCOME & NAME INPUT SCREEN -->
+    <div class="screen active" id="welcome-screen">
+        <h1 class="welcome-title">NIHONGO N5 HIRAGANA PRACTICE</h1>
+        <div class="welcome-subtitle">ひらがな たいぴんぐ (Hiragana Typing)</div>
+        
+        <div class="instructions-card">
+            <h2>せつめい (Instructions)</h2>
+            <ul class="instructions-list">
+                <li>Look at the centered <strong>ROMAJI</strong> text and English meaning.</li>
+                <li>Type the matching <strong>HIRAGANA</strong> translation.</li>
+                <li>Each word has a <strong>45-second timer</strong>, but you will click "Next Word" when ready.</li>
+                <li>Enter your full name below for your official completion certificate!</li>
+            </ul>
+        </div>
+
+        <div class="name-input-group">
+            <label for="user-name-input">なまえ (Your Name):</label>
+            <input type="text" id="user-name-input" placeholder="Type your full name here..." required>
+        </div>
+
+        <button class="start-btn" onclick="startPractice()">はじめる (Start Practice) ➔</button>
+    </div>
+
+    <!-- 2. MAIN PRACTICE SCREEN -->
+    <div class="screen" id="practice-screen">
+        <div class="header">
+            <h1>ひらがな れんしゅう (Hiragana Practice)</h1>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="stats">
+                <span id="word-count">Tango: 0 / 50</span>
+                <span class="timer-badge" id="timer-display">Jikan: 45s</span>
+                <span id="score">Ten: 0</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="romaji-text" id="vocab-romaji">---</div>
+            <div class="english-meaning" id="vocab-meaning">---</div>
+        </div>
+
+        <form class="input-section" onsubmit="handleFormSubmit(event)">
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    id="hiragana-input" 
+                    class="hiragana-input" 
+                    placeholder="ひらがなで にゅうりょく..." 
+                    autocomplete="off"
+                >
+                <button type="submit" id="submit-btn" class="submit-btn">かくにん (Check)</button>
+            </div>
+            <div class="error-message" id="error-message"></div>
+        </form>
+
+        <div class="feedback-overlay" id="feedback-overlay">
+            <div class="feedback-title" id="feedback-title">SEIKAI! 🎉</div>
+            <div class="feedback-sub" id="feedback-msg">Seikai desu! Subarashii!</div>
+            <button class="next-btn" id="next-btn" onclick="nextWord()">つぎ (Next Word) ➔</button>
+        </div>
+    </div>
+
+    <!-- 3. WEBCAM VERIFICATION SCREEN -->
+    <div class="screen" id="camera-screen">
+        <h1 class="welcome-title">しゃしん かくにん (Photo Verification)</h1>
+        <div class="welcome-subtitle">Please take a picture to verify your identity before getting your certificate.</div>
+        
+        <div class="webcam-box">
+            <video id="webcam-video" autoplay playsinline></video>
+            <canvas id="photo-canvas" style="display:none;"></canvas>
+            <img id="captured-photo" alt="Your Photo" style="display:none;">
+        </div>
+
+        <div class="camera-actions">
+            <button class="start-btn" id="snap-btn" onclick="takeSnapshot()">📷 さつえい (Take Photo)</button>
+            <button class="start-btn" id="retake-btn" onclick="resetCamera()" style="display:none; background: #666;">Torinaoshi (Retake)</button>
+            <button class="start-btn" id="cert-btn" onclick="showCertificate()" style="display:none; background: var(--primary-green);">しょうめいしょ (Get Certificate) ➔</button>
+        </div>
+    </div>
+
+    <!-- 4. CERTIFICATE SCREEN -->
+    <div class="screen" id="certificate-screen">
+        <div class="certificate" id="certificate">
+            <div class="cert-border">
+                <div class="cert-header">SYOU MEI SHO</div>
+                <div class="cert-subtitle">Shuuryou Shoumeisho (Certificate of Completion)</div>
+                
+                <div class="cert-body">
+                    This certifies that
+                    <div class="cert-name" id="cert-user-name">[ Name Here ]</div>
+                    has successfully completed the
+                    <div class="cert-title">Nihongo N5 Hiragana Renchuu</div>
+                </div>
+
+                <div class="cert-details">
+                    <div><strong>Tokuten (Score):</strong> <span id="cert-score">0</span> / 500</div>
+                    <div><strong>Jikan (Total Time Taken):</strong> <span id="cert-total-time">00m 00s</span></div>
+                </div>
+
+                <div class="cert-footer">
+                    <div><strong>Hiduke (Date):</strong> <span id="cert-date">2026-08-10</span></div>
+                    <div><strong>Kounin (Status):</strong> Kakunin Zumi (Verified)</div>
+                </div>
+            </div>
+        </div>
+        <button class="start-btn" onclick="window.print()" style="margin-top: 20px;">🖨️ いんさつ (Print / Save PDF)</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
